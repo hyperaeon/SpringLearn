@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="duke" class="com.spring.chapter2.Juggler">
+		<constructor-arg value="15" />
+	</bean>
+
+	<bean id="poeticDuke" class="com.spring.chapter2.PoeticJuggler">
+		<constructor-arg value="15" />
+		<constructor-arg ref="sonnet29" />
+	</bean>
+
+	<!-- inner constructor bean -->
+	<bean id="poeticDuke" class="com.spring.chapter2.PoeticJuggler">
+		<constructor-arg value="15" />
+		<constructor-arg>
+			<bean class="com.spring.chapter2.Sonnet29" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="sonnet29" class="com.spring.chapter2.Sonnet29" scope="prototype" />
+
+	<bean id="theStage" class="com.spring.chapter2.Stage"
+		factory-method="getInstance" />
+
+	<!-- <bean id="auditorium" class="com.spring.chapter2.Auditorium" -->
+	<!-- init-method="turnOnLights" -->
+	<!-- destroy-method="turnOffLights"/> -->
+
+	<bean id="kenny" class="com.spring.chapter2.Instrumentalist">
+		<property name="song" value="Jingle Bells" />
+		<property name="instrument" ref="saxophone" />
+	</bean>
+
+	<!-- <bean id="kenny2" class="com.spring.chapter2.Instrumentalist"> -->
+	<!-- <property name="song" value="#{kenny.song}"/> -->
+	<!-- <property name="instrument" ref="saxophone"/> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kenny3" class="com.spring.chapter2.Instrumentalist"> -->
+	<!-- <property name="song" value="#{songSelector.selectSong()}"/> -->
+	<!-- <property name="instrument" ref="saxophone"/> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kenny4" class="com.spring.chapter2.Instrumentalist"> -->
+	<!-- <property name="song" value="#{songSelector.selectSong()?.selectSong()}"/> -->
+	<!-- <property name="instrument" ref="saxophone"/> -->
+	<!-- <property name="multiplier" value="#{T(java.lang.Math).PI}"/> -->
+	<!-- <property name="randomNumber" value="#{T(java.lang.Math).random()}"/> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kenny5" class="com.spring.chapter2.Instrumentalist"> -->
+	<!-- <property name="song" value="#{kenny.song?:'Greensleeves'}" /> -->
+	<!-- <property name="instrument" -->
+	<!-- value="#{songSelector.selectSong()=='Jingel Bells'?piano:saxophone}" 
+		/> -->
+<!-- 	<property name="validEmail" -->
+<!-- 	value="#{admin.email matches '[a-zA-z0-9._%+-]+@[a-zA-A0-9.-]+\\.com'}" -->
+<!-- </bean> -->
+
+		<!-- p schema -->
+		<bean id="kenny" class="com.spring.chapter2.Instrumentalist"
+			p:song="Jingle Bells" p:instrument-ref="saxophone">
+		</bean>
+
+		<!-- inner setter bean -->
+		<!-- <bean id="kenny" class="com.spring.chapter2.Instrumentalist"> -->
+		<!-- <property name="song" value="Jingle Bells"/> -->
+		<!-- <property name="instrument" > -->
+		<!-- <bean class="com.spring.chapter2.Saxophone"/> -->
+		<!-- </property> -->
+		<!-- </bean> -->
+
+		<bean id="saxophone" class="com.spring.chapter2.Saxophone" />
+
+		<bean id="hank" class="com.spring.chapter2.OneManBand">
+			<property name="instruments">
+				<list>
+					<ref bean="guitar" />
+					<ref bean="cymbal" />
+					<ref bean="harmonica" />
+				</list>
+			</property>
+		</bean>
+
+		<bean id="hank2" class="com.spring.chapter2.OneManBand2">
+			<property name="instruments">
+				<map>
+					<entry key="GUITAR" value-ref="guitar" />
+					<entry key="CYMBAL" value-ref="cymbal" />
+					<entry key="HARMONICA" value-ref="harmonica" />
+				</map>
+			</property>
+		</bean>
+
+		<bean id="hank3" class="com.spring.chapter2.OneManBand3">
+			<property name="instruments">
+				<props>
+					<prop key="GUITAR">strume</prop>
+					<prop key="CYMBAL">carad</prop>
+					<prop key="HARMONICA">hum</prop>
+				</props>
+			</property>
+			<!-- <property name="instruments"><null/></property> -->
+		</bean>
+</beans>
